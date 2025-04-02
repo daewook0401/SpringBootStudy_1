@@ -5,19 +5,29 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.kh.start.configuration.filter.JwtFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration // 메서드 Bean으로 등록
+@RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfigure {
 	// 로그인,회원가입 등 관리하는데 사용
 	// security와 관련된 빈들을 등록하고 관리하기위해서 이거 만듦
 	// 필요없는 필터들 안쓰려면 SecurityFilterChain이라는 모양으로 만들어야함
 	// => securityFilterChain을 반환하는 메서드를 만들어야함
-	
+	private final JwtFilter filter;
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -43,10 +53,17 @@ public class SecurityConfigure {
 							.httpBasic(AbstractHttpConfigurer::disable)
 							.csrf(AbstractHttpConfigurer::disable)
 							.authorizeHttpRequests(requests -> {
-								requests.requestMatchers(HttpMethod.POST,"/auth/login", "/members").permitAll();
+								requests.requestMatchers(HttpMethod.POST,"/auth/login", "/auth/refresh","/members").permitAll();
 								requests.requestMatchers("/admin/**").hasRole("ADMIN");
 								requests.requestMatchers(HttpMethod.PUT, "/members").authenticated();
+								requests.requestMatchers(HttpMethod.DELETE, "/members").authenticated();
 							})
+							/*
+							 * sessionManagement : 세션을 어떻게 관리할 것인지 지정할 수 있음
+							 * sessionCreationPolicy : 세션 사용 정책을 결정
+							 */
+							.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+							.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
 							.build(); 
 	}
 	

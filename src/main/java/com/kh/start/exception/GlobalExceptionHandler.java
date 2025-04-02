@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(CustomAuthenticationException.class)
-  public ResponseEntity<?> handleCustomAuthenticationException(MemberIdDuplicateException e) {
+  public ResponseEntity<?> handleCustomAuthenticationException(CustomAuthenticationException e) {
     Map<String, String> errors = new HashMap();
     errors.put("error-message", e.getMessage());
     return ResponseEntity.badRequest().body(errors);

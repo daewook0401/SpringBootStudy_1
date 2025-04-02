@@ -50,8 +50,8 @@ public class AuthServiceImpl implements AuthService {
         }
         CustomUserDetails user = (CustomUserDetails)authentication.getPrincipal();
 
-        log.info("로그인 성공!");
-        log.info("인증에 성공한 사용자의 정보 : {}", user);
+        // log.info("로그인 성공!");
+        // log.info("인증에 성공한 사용자의 정보 : {}", user);
 
 
         // 토큰 발급
@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
         // 해시코드가 다르면 다른 객체다 O ==> 같은 값으로 해시돌리면 항상 결과가 같음 
         // 해시코드가 같으면 같은 객체다 X
 
-        Map<String, String> loginResponse = tokenService.generateToken(user.getUsername());
+        Map<String, String> loginResponse = tokenService.generateToken(user.getUsername(), user.getMemberNo());
 
         loginResponse.put("memberId", user.getUsername());
         loginResponse.put("memberName", user.getMemberName());
