@@ -20,27 +20,31 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public void save(BoardDTO board, MultipartFile file) {
-
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
     @Override
     public List<BoardDTO> findAll(int pageNo) {
-
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
     public BoardDTO findById(Long boardNo) {
-
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
     @Override
     public BoardDTO update(BoardDTO board, MultipartFile file) {
-
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public void deleteById(Long boardNo) {
-        
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
     }
 
 }
