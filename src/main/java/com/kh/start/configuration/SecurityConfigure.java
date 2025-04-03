@@ -53,10 +53,12 @@ public class SecurityConfigure {
 							.httpBasic(AbstractHttpConfigurer::disable)
 							.csrf(AbstractHttpConfigurer::disable)
 							.authorizeHttpRequests(requests -> {
-								requests.requestMatchers(HttpMethod.POST,"/auth/login", "/auth/refresh","/members").permitAll();
+								requests.requestMatchers(HttpMethod.POST,"/auth/login", "/auth/refresh","/members", "/boards").permitAll();
 								requests.requestMatchers("/admin/**").hasRole("ADMIN");
-								requests.requestMatchers(HttpMethod.PUT, "/members").authenticated();
-								requests.requestMatchers(HttpMethod.DELETE, "/members").authenticated();
+								requests.requestMatchers(HttpMethod.GET, "/uploads/**", "/boards/**", "/comments/**").permitAll();
+								requests.requestMatchers(HttpMethod.PUT, "/members", "/boards/**").authenticated();
+								requests.requestMatchers(HttpMethod.DELETE, "/members", "/boards/**").authenticated();
+								requests.requestMatchers(HttpMethod.POST, "/boards", "/comments").authenticated();
 							})
 							/*
 							 * sessionManagement : 세션을 어떻게 관리할 것인지 지정할 수 있음
