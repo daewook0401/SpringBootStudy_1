@@ -26,7 +26,7 @@ public class FileService {
         try{
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return "https//loaclhost/uploads" + originalFileName;
+            return "http://localhost/uploads/" + originalFileName;
         } catch(IOException e){
             throw new RuntimeException("파일이 너무 크고 아름답습니다.");
         }

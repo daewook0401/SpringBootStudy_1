@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.start.auth.model.vo.CustomUserDetails;
+import com.kh.start.exception.MemberIdDuplicateException;
 import com.kh.start.member.model.dao.MemberMapper;
 import com.kh.start.member.model.dto.ChangePasswordDTO;
 import com.kh.start.member.model.dto.MemberDTO;
@@ -31,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 		// id가 있는지 없는지 조회
 		MemberDTO searchedMember = mapper.getMemberByMemberId(member.getMemberId());
 		if(searchedMember != null) {
-			throw new RuntimeException("존재하지 않는 아이디");
+			throw new MemberIdDuplicateException("존재하지 않는 아이디");
 		}
 		
 		// 비밀번호 암호화

@@ -50,7 +50,7 @@ public class MemberController {
 	 */
 	
 	@PostMapping
-	public ResponseEntity<?> signUp(@RequestBody MemberDTO member){
+	public ResponseEntity<?> signUp(@RequestBody @Valid MemberDTO member){
 		//log.info("낸나나나나나ㅏ {}",member);
 		memberService.signUp(member);
 		return ResponseEntity.status(201).build(); // 상태코드 201 : 성공적으로 데이터가 생성됨

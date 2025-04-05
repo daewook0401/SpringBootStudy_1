@@ -38,7 +38,7 @@ public class BoardController {
         // log.info("게시글 정보 : {}, 파일 정보 : {}", board, file.getOriginalFilename());
 
         boardService.save(board, file);
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
